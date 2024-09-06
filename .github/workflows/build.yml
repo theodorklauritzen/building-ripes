@@ -1,0 +1,25 @@
+
+name: Build and release Apple Silicon Ripes version
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Ripes on Apple Silicon
+    permissions:
+      contents: write
+    runs-on: macos-latest
+
+    steps:
+      - name: Build
+        run: ./build.sh
+
+      - name: Zip
+        run: zip -vr ripes.zip ./
+        
+      - name: Publish Release
+        run: gh release create './ripes.zip'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
