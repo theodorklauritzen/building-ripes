@@ -17,8 +17,8 @@ jobs:
         run: ./build.sh
 
       - name: Build second stage
-        working-directory: ${{ runner.home }}/ripes-ntnu
         run: |
+          cd ~/ripes-ntnu
           cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_OSX_ARCHITECTURES="arm64" .
           make
 
@@ -33,14 +33,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Zip
-        run: zip -r ripes-v2.2.6-mac-arm.zip ./ripes-ntnu
-        working-directory: ${{ runner.home }}
+        run: |
+          cd ~/
+          zip -r ripes-v2.2.6-mac-arm.zip ./ripes-ntnu
         env:
           VERSION: ${{ steps.version.outputs.VERSION }}
 
       - name: Publish Release
-        run: gh release create $VERSION ripes-$VERSION-mac-arm.zip
-        working-directory: ${{ runner.home }}
+        run: gh release create $VERSION ~/ripes-$VERSION-mac-arm.zip
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.version.outputs.VERSION }}
