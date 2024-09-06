@@ -18,9 +18,14 @@ jobs:
 
       - name: Zip
         run: zip -vr ripes.zip ./
-        
+
+      - name: Find tag
+        id: version
+        run: |
+          echo VERSION=$(gh release list --repo mortbopet/Ripes --json tagName -q '.[1].tagName' --order desc --limit 2) >> $GITHUB_OUTPUT
+
       - name: Publish Release
-        run: gh release create './ripes.zip'
+        run: gh release create ${{ steps.version.VERSION }} './ripes.zip'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
