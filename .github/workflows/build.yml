@@ -23,6 +23,8 @@ jobs:
         id: version
         run: |
           echo VERSION=$(gh release list --repo mortbopet/Ripes --json tagName -q '.[1].tagName' --order desc --limit 2) >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Release
         run: gh release create $VERSION './ripes.zip'
