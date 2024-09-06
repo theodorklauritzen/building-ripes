@@ -13,9 +13,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Build
+      - name: Build script
+        run: ./build.sh
+
+      - name: Build second stage
+        working-directory: ~/ripes-ntnu
         run: |
-          source ./build.sh
           cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_OSX_ARCHITECTURES="arm64" .
           make
 
