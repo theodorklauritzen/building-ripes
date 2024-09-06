@@ -24,7 +24,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Zip
-        run: zip -vr ripes-$VERSION-mac-arm.zip ./ripes-ntnu
+        run: zip -vr ripes-v2.2.6-mac-arm.zip . -i ./ripes-ntnu
         env:
           VERSION: ${{ steps.version.outputs.VERSION }}
 
